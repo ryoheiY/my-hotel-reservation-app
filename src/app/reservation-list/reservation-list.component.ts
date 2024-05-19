@@ -7,22 +7,22 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-reservation-list',
   templateUrl: './reservation-list.component.html',
-  styleUrls: ['./reservation-list.component.css']
+  styleUrls: ['./reservation-list.component.css'],
 })
-export class ReservationListComponent implements OnInit  {
-
+export class ReservationListComponent implements OnInit {
   reservations: Reservation[] = [];
 
-  constructor(private reservationService: ReservationService){
-  }
+  constructor(private reservationService: ReservationService) {}
 
   ngOnInit(): void {
-    this.reservations = this.reservationService.getResevations();
+    this.reservationService.getResevations().subscribe((reservations) => {
+      this.reservations = reservations;
+    });
   }
 
-  deleteReservation(id : string){
-    this.reservationService.deleteReservation(id);
+  deleteReservation(id: string) {
+    this.reservationService.deleteReservation(id).subscribe(() => {
+      console.log('Delete!');
+    });
   }
-
-
 }
